@@ -1,6 +1,3 @@
-// FormatMessageTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include "pch.h"
 #include "FormatMessage.h"
 
@@ -18,19 +15,12 @@ int main()
     // Outputs:
     //
     // ERROR_SUCCESS: The operation completed successfully.
-    // 
     // ERROR_INVALID_FUNCTION : Incorrect function.
-    //
     // ERROR_FILE_NOT_FOUND : The system cannot find the file specified.
-    // 
     // ERROR_ACCESS_DENIED : Access is denied.
-    // 
     // ERROR_INVALID_HANDLE : The handle is invalid.
-    // 
     // ERROR_NOT_ENOUGH_MEMORY : Not enough memory resources are available to process this command.
-    // 
     // ERROR_OUTOFMEMORY : Not enough memory resources are available to complete this operation.
-    // 
     // ERROR_NOT_SUPPORTED : The request is not supported.
 
     return 0;
