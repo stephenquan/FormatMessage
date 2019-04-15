@@ -11,6 +11,13 @@ public:
         Assign(dwError);
     }
 
+    CFormatMessage(const CFormatMessage& other) :
+        m_Error(ERROR_SUCCESS),
+        m_ErrorText(NULL)
+    {
+        Assign(other.Error());
+    }
+
     ~CFormatMessage()
     {
         Clear();
@@ -49,6 +56,11 @@ public:
     DWORD Error() const { return m_Error; }
     LPTSTR ErrorText() const { return m_ErrorText; }
     operator LPTSTR() const { return ErrorText(); }
+    CFormatMessage& operator= (const CFormatMessage& other)
+    {
+        Assign(other.Error());
+        return *this;
+    }
 
 protected:
     DWORD m_Error;
