@@ -1,16 +1,22 @@
 #include "pch.h"
 #include "FormatMessage.h"
 
+#ifdef UNICODE
+#define COUT std::wcout
+#else
+#define COUT std::cout
+#endif
+
 int main()
 {
-    std::wcout << L"ERROR_SUCCESS: " << (LPTSTR) CFormatMessage(ERROR_SUCCESS) << L"\n";
-    std::wcout << L"ERROR_INVALID_FUNCTION: " << (LPTSTR)CFormatMessage(ERROR_INVALID_FUNCTION) << L"\n";
-    std::wcout << L"ERROR_FILE_NOT_FOUND: " << (LPTSTR)CFormatMessage(ERROR_FILE_NOT_FOUND) << L"\n";
-    std::wcout << L"ERROR_ACCESS_DENIED: " << (LPTSTR)CFormatMessage(ERROR_ACCESS_DENIED) << L"\n";
-    std::wcout << L"ERROR_INVALID_HANDLE: " << (LPTSTR)CFormatMessage(ERROR_INVALID_HANDLE) << L"\n";
-    std::wcout << L"ERROR_NOT_ENOUGH_MEMORY: " << (LPTSTR)CFormatMessage(ERROR_NOT_ENOUGH_MEMORY) << L"\n";
-    std::wcout << L"ERROR_OUTOFMEMORY: " << (LPTSTR)CFormatMessage(ERROR_OUTOFMEMORY) << L"\n";
-    std::wcout << L"ERROR_NOT_SUPPORTED: " << (LPTSTR)CFormatMessage(ERROR_NOT_SUPPORTED) << L"\n";
+    COUT << _T("ERROR_SUCCESS: ") << (LPTSTR) CFormatMessage(ERROR_SUCCESS) << _T("\n");
+    COUT << _T("ERROR_INVALID_FUNCTION: ") << (LPTSTR)CFormatMessage(ERROR_INVALID_FUNCTION) << _T("\n");
+    COUT << _T("ERROR_FILE_NOT_FOUND: ") << (LPTSTR)CFormatMessage(ERROR_FILE_NOT_FOUND) << _T("\n");
+    COUT << _T("ERROR_ACCESS_DENIED: ") << (LPTSTR)CFormatMessage(ERROR_ACCESS_DENIED) << _T("\n");
+    COUT << _T("ERROR_INVALID_HANDLE: ") << (LPTSTR)CFormatMessage(ERROR_INVALID_HANDLE) << _T("\n");
+    COUT << _T("ERROR_NOT_ENOUGH_MEMORY: ") << (LPTSTR)CFormatMessage(ERROR_NOT_ENOUGH_MEMORY) << _T("\n");
+    COUT << _T("ERROR_OUTOFMEMORY: ") << (LPTSTR)CFormatMessage(ERROR_OUTOFMEMORY) << _T("\n");
+    COUT << _T("ERROR_NOT_SUPPORTED: ") << (LPTSTR)CFormatMessage(ERROR_NOT_SUPPORTED) << _T("\n");
 
     // Outputs:
     //
