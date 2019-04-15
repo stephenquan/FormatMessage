@@ -14,7 +14,10 @@ public:
     DWORD Error() const { return m_Error; }
     LPTSTR ErrorText() const { return m_ErrorText; }
     DWORD LanguageId() const { return m_LanguageId; }
+    operator DWORD() const { return m_Error; }
     operator LPTSTR() const { return ErrorText(); }
+    operator LPCTSTR() const { return ErrorText(); }
+    CFormatMessage& operator= (DWORD dwError) { Assign(dwError); }
     CFormatMessage& operator= (const CFormatMessage& other);
 
 protected:
