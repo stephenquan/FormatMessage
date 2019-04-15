@@ -1,2 +1,4 @@
 *.filters
 *.user
+.vs
+Output
