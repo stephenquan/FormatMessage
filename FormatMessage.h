@@ -4,20 +4,22 @@
 class CFormatMessage
 {
 public:
-    CFormatMessage(DWORD dwError);
+    CFormatMessage(DWORD dwError, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT));
     CFormatMessage(const CFormatMessage& other);
     ~CFormatMessage();
            
     void Clear();
-    void Assign(DWORD dwError);
+    void Assign(DWORD dwError, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT));
     void Assign(const CFormatMessage& other);
     DWORD Error() const { return m_Error; }
     LPTSTR ErrorText() const { return m_ErrorText; }
+    DWORD LanguageId() const { return m_LanguageId; }
     operator LPTSTR() const { return ErrorText(); }
     CFormatMessage& operator= (const CFormatMessage& other);
 
 protected:
     DWORD m_Error;
+    DWORD m_LanguageId;
     LPTSTR m_ErrorText;
 
 };
