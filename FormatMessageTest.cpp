@@ -1,12 +1,6 @@
 ﻿#include "pch.h"
 #include "FormatMessage.h"
 
-#ifdef UNICODE
-#define COUT std::wcout
-#else
-#define COUT std::cout
-#endif
-
 void test(LPCTSTR testMessage, DWORD dwError, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))
 {
     OutputDebugString(testMessage);
