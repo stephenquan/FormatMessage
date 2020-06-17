@@ -28,14 +28,14 @@ public:
         m_szMessageTextA(other.m_szMessageTextA),
         m_szMessageTextW(other.m_szMessageTextW)
     {
-        other.m_dwMessageId = 0;
+        other.m_dwMessageId = ERROR_SUCCESS;
         other.m_dwLanguageId = 0;
         other.m_szMessageTextA = nullptr;
         other.m_szMessageTextW = nullptr;
     }
 
     ~CFormatMessage() { Clear(); }
-           
+
     void Clear()
     {
         if (m_szMessageTextA)
@@ -51,6 +51,7 @@ public:
         }
 
         m_dwMessageId = ERROR_SUCCESS;
+        m_dwLanguageId = 0;
     }
 
     void Assign(DWORD dwMessageId, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))
