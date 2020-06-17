@@ -4,7 +4,8 @@
 CFormatMessage::CFormatMessage(DWORD dwMessageId, DWORD dwLanguageId) :
     m_dwMessageId(ERROR_SUCCESS),
     m_dwLanguageId(0),
-    m_szMessageText(NULL)
+    m_szMessageTextA(nullptr),
+    m_szMessageTextW(nullptr)
 {
     Assign(dwMessageId, dwLanguageId);
 }
@@ -12,7 +13,8 @@ CFormatMessage::CFormatMessage(DWORD dwMessageId, DWORD dwLanguageId) :
 CFormatMessage::CFormatMessage(const CFormatMessage& other) :
     m_dwMessageId(ERROR_SUCCESS),
     m_dwLanguageId(0),
-    m_szMessageText(NULL)
+    m_szMessageTextA(nullptr),
+    m_szMessageTextW(nullptr)
 {
     Assign(other);
 }
@@ -20,11 +22,13 @@ CFormatMessage::CFormatMessage(const CFormatMessage& other) :
 CFormatMessage::CFormatMessage(CFormatMessage&& other) :
     m_dwMessageId(other.m_dwMessageId),
     m_dwLanguageId(other.m_dwLanguageId),
-    m_szMessageText(other.m_szMessageText)
+    m_szMessageTextA(other.m_szMessageTextA),
+    m_szMessageTextW(other.m_szMessageTextW)
 {
     other.m_dwMessageId = 0;
     other.m_dwLanguageId = 0;
-    other.m_szMessageText = NULL;
+    other.m_szMessageTextA = nullptr;
+    other.m_szMessageTextW = nullptr;
 }
 
 CFormatMessage::~CFormatMessage()
@@ -34,31 +38,29 @@ CFormatMessage::~CFormatMessage()
             
 void CFormatMessage::Clear()
 {
-    if (!m_szMessageText)
+    if (m_szMessageTextA)
     {
-        return;
+        LocalFree(m_szMessageTextA);
+        m_szMessageTextA = nullptr;
     }
-    LocalFree(m_szMessageText);
-    m_szMessageText = NULL;
+
+    if (m_szMessageTextW)
+    {
+        LocalFree(m_szMessageTextW);
+        m_szMessageTextW = nullptr;
+    }
+
     m_dwMessageId = ERROR_SUCCESS;
 }
 
 void CFormatMessage::Assign(DWORD dwMessageId, DWORD dwLanguageId)
 {
     Clear();
+    DWORD dwFlags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS;
     m_dwMessageId = dwMessageId;
     m_dwLanguageId = dwLanguageId;
-    ::FormatMessage(
-        FORMAT_MESSAGE_FROM_SYSTEM
-        | FORMAT_MESSAGE_ALLOCATE_BUFFER
-        | FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        m_dwMessageId,
-        m_dwLanguageId,
-        (LPTSTR)&m_szMessageText,
-        0,
-        NULL
-    );
+    ::FormatMessageA(dwFlags, NULL, m_dwMessageId, m_dwLanguageId, (LPSTR)&m_szMessageTextA, 0, NULL);
+    ::FormatMessageW(dwFlags, NULL, m_dwMessageId, m_dwLanguageId, (LPWSTR)&m_szMessageTextW, 0, NULL);
 }
 
 void CFormatMessage::Assign(const CFormatMessage& other)

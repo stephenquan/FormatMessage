@@ -1,10 +1,10 @@
 ﻿#include "pch.h"
 #include "FormatMessage.h"
 
-class COutput
+class CDebugOutput
 {
 public:
-    COutput& operator << (LPCWSTR text)
+    CDebugOutput& operator << (LPCWSTR text)
     {
         OutputDebugStringW(text);
         char textA[1024] = { };
@@ -13,34 +13,34 @@ public:
         return *this;
     }
 
-    COutput& operator << (LPCSTR text)
+    CDebugOutput& operator << (LPCSTR text)
     {
         OutputDebugStringA(text);
         printf("%s", text);
         return *this;
     }
 
-    COutput& operator << (DWORD value)
+    CDebugOutput& operator << (DWORD value)
     {
         WCHAR text[256];
         wsprintf(text, L"%d", value);
         return operator << (text);
     }
 
-    COutput& operator << (const CFormatMessage& formatMessage)
+    CDebugOutput& operator << (const CFormatMessage& formatMessage)
     {
         return operator << (formatMessage.MessageText());
     }
 
 };
 
-COutput output;
+CDebugOutput debugOutput;
 
 void test(LPCWSTR testMessage, DWORD dwMessageId, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))
 {
-    output << "Test: " << testMessage << "\n";
-    output << "MessageId: " << dwMessageId << "\n";
-    output << "MessageText: " << CFormatMessage(dwMessageId, dwLanguageId).MessageText() << "\n";
+    debugOutput << "Test: " << testMessage << "\n";
+    debugOutput << "MessageId: " << dwMessageId << "\n";
+    debugOutput << "MessageText: " << CFormatMessage(dwMessageId, dwLanguageId).MessageText() << "\n";
 }
 
 int main()
