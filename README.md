@@ -5,6 +5,7 @@ A lightweight C++ wrapper CFormatMessage is provided as a helper.
 
 The application, itself, displays a number of messages with the following output:
 
+```
 Test: ERROR_SUCCESS (Default)
 MessageId: 0
 MessageText: The operation completed successfully.
@@ -44,3 +45,4 @@ MessageText: Not enough memory resources are available to complete this operatio
 Test: ERROR_NOT_SUPPORTED
 MessageId: 50
 MessageText: The request is not supported.
+```
