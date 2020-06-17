@@ -13,8 +13,8 @@ public:
     void Assign(DWORD dwMessageId, DWORD dwLanguageId = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT));
     void Assign(const CFormatMessage& other);
     DWORD MessageId() const { return m_dwMessageId; }
-    LPCSTR MessageTextA() const { return m_szMessageTextA; }
-    LPCWSTR MessageTextW() const { return m_szMessageTextW; }
+    LPCSTR MessageTextA() const { return _messageText<char>(); }
+    LPCWSTR MessageTextW() const { return _messageText<WCHAR>(); }
     LPCTSTR MessageText() const { return _messageText<TCHAR>(); }
     DWORD LanguageId() const { return m_dwLanguageId; }
     operator DWORD() const { return m_dwMessageId; }
