@@ -3,7 +3,7 @@
 This application demonstrate the Window's FormatMessage function.
 A lightweight C++ wrapper CFormatMessage is provided as a helper.
 
-The application, itself, displays a number of messages with the following output:
+The application, itself, displays a number of messages with the following output (N.B. you may need to set an appropriate font, e.g. NSimSun, to see the asian characters correctly):
 
 ```
 Test: ERROR_SUCCESS (Default)
