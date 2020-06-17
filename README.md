@@ -26,6 +26,8 @@ Test: ERROR_FILE_NOT_FOUND
 MessageId: 2
 MessageText: The system cannot find the file specified.
 
+You may need to set an appropriate Console font to see asian (Japanese) characters correctly (e.g. NSimSun).
+
 Test: ERROR_ACCESS_DENIED
 MessageId: 5
 MessageText: Access is denied.
