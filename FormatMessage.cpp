@@ -1,18 +1,30 @@
 #include "pch.h"
 #include "FormatMessage.h"
 
-CFormatMessage::CFormatMessage(DWORD dwError, DWORD dwLanguageId) :
-    m_Error(ERROR_SUCCESS),
-    m_ErrorText(NULL)
+CFormatMessage::CFormatMessage(DWORD dwMessageId, DWORD dwLanguageId) :
+    m_dwMessageId(ERROR_SUCCESS),
+    m_dwLanguageId(0),
+    m_szMessageText(NULL)
 {
-    Assign(dwError, dwLanguageId);
+    Assign(dwMessageId, dwLanguageId);
 }
 
 CFormatMessage::CFormatMessage(const CFormatMessage& other) :
-    m_Error(ERROR_SUCCESS),
-    m_ErrorText(NULL)
+    m_dwMessageId(ERROR_SUCCESS),
+    m_dwLanguageId(0),
+    m_szMessageText(NULL)
 {
     Assign(other);
+}
+
+CFormatMessage::CFormatMessage(CFormatMessage&& other) :
+    m_dwMessageId(other.m_dwMessageId),
+    m_dwLanguageId(other.m_dwLanguageId),
+    m_szMessageText(other.m_szMessageText)
+{
+    other.m_dwMessageId = 0;
+    other.m_dwLanguageId = 0;
+    other.m_szMessageText = NULL;
 }
 
 CFormatMessage::~CFormatMessage()
@@ -22,25 +34,28 @@ CFormatMessage::~CFormatMessage()
             
 void CFormatMessage::Clear()
 {
-    if (m_ErrorText != NULL)
+    if (!m_szMessageText)
     {
-        LocalFree(m_ErrorText);
-        m_ErrorText = NULL;
+        return;
     }
-    m_Error = ERROR_SUCCESS;
+    LocalFree(m_szMessageText);
+    m_szMessageText = NULL;
+    m_dwMessageId = ERROR_SUCCESS;
 }
 
-void CFormatMessage::Assign(DWORD dwError, DWORD dwLanguageId)
+void CFormatMessage::Assign(DWORD dwMessageId, DWORD dwLanguageId)
 {
     Clear();
-    m_Error = dwError;
-    m_LanguageId = dwLanguageId;
+    m_dwMessageId = dwMessageId;
+    m_dwLanguageId = dwLanguageId;
     ::FormatMessage(
-        FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS,
+        FORMAT_MESSAGE_FROM_SYSTEM
+        | FORMAT_MESSAGE_ALLOCATE_BUFFER
+        | FORMAT_MESSAGE_IGNORE_INSERTS,
         NULL,
-        m_Error,
-        m_LanguageId,
-        (LPTSTR)&m_ErrorText,
+        m_dwMessageId,
+        m_dwLanguageId,
+        (LPTSTR)&m_szMessageText,
         0,
         NULL
     );
@@ -48,7 +63,7 @@ void CFormatMessage::Assign(DWORD dwError, DWORD dwLanguageId)
 
 void CFormatMessage::Assign(const CFormatMessage& other)
 {
-    Assign(other.Error(), other.m_LanguageId);
+    Assign(other.MessageId(), other.m_dwLanguageId);
 }
 
 CFormatMessage& CFormatMessage::operator= (const CFormatMessage& other)
