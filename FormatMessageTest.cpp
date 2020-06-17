@@ -8,7 +8,7 @@ public:
     {
         OutputDebugStringW(text);
         char textA[1024] = { };
-        WideCharToMultiByte(CP_UTF8, 0, text, wcslen(text) + 1, textA, 1024, NULL, NULL);
+        WideCharToMultiByte(CP_UTF8, 0, text, static_cast<int>(wcslen(text) + 1), textA, 1024, NULL, NULL);
         wprintf(L"%S", textA);
         return *this;
     }
